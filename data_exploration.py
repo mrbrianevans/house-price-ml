@@ -2,8 +2,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-mdf = pd.read_csv('detailed_house_sales.csv')
-pdf = pd.get_dummies(mdf, columns=['property_type'])
+pdf = pd.read_csv('detailed_house_sales.csv')
 
 fig, ax = plt.subplots(figsize=(8, 8))
 sns.heatmap(pdf.corr(), vmax=.8, vmin=-.8, square=True, center=0,
