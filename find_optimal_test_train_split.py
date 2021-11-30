@@ -8,8 +8,9 @@ import seaborn as sns
 import get_data
 from linear_regression import train_linear_model
 from neuralnet import train_mlp_model
+from ridge_regression import train_ridge_model
 
-splits = np.arange(0.001, 0.5, 0.1)
+splits = np.arange(0.001, 0.9, 0.01)
 
 x, y = get_data.get_scaled_Xy()
 iterations = 10
@@ -20,7 +21,7 @@ for index in range(len(splits)):
     for i in range(iterations):
         start = time.perf_counter_ns()
         x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=split)
-        error = train_mlp_model(x_train, x_test, y_train, y_test)
+        error = train_ridge_model(x_train, x_test, y_train, y_test)
         time_taken = time.perf_counter_ns() - start
         results[index*iterations+i] = (index*iterations+i, split, error, time_taken)
 
@@ -38,5 +39,5 @@ sns.scatterplot(data=rdf.groupby(by=train_name).mean(), x=train_name, y=error_na
 ax.set_xlabel('Training size as a proportion of full data set')
 ax.set_ylabel(f'Mean Absolute Error (avg of {iterations} runs)')
 ax.set_title('Train Test Split Performance for Ridge Regression')
-plt.show()
 plt.savefig('images/test_train_split_dropoff_ridge_regression.png')
+plt.show()

@@ -1,9 +1,12 @@
 import pandas as pd
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+
+seed = 3420  # to get the same test/train split every time
 
 
 def get_unscaled_dataframe():
-    return pd.read_csv('detailed_house_sales.csv')
+    return pd.read_csv('data/detailed_house_sales.csv')
 
 
 def get_scaled_Xy():
@@ -20,3 +23,8 @@ def get_scaled_Xy():
     X = scaler.fit_transform(x)
     return X, y
 
+
+def get_fixed_test_train_split():
+    x, y = get_scaled_Xy()
+    x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=seed)
+    return x_train, x_test, y_train, y_test
