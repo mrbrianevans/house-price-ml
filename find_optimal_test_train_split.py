@@ -5,20 +5,13 @@ from sklearn.model_selection import train_test_split
 import time
 import seaborn as sns
 
+import get_data
 from linear_regression import train_linear_model
 from neuralnet import train_mlp_model
 
 splits = np.arange(0.001, 0.5, 0.1)
 
-data = pd.read_csv('detailed_house_sales.csv')
-x = data[
-    ['new_build_cat', 'duration_cat', 'ppdCategory_cat', 'Latitude', 'Longitude', 'Population',
-     'Households',
-     'Altitude', 'London zone', 'Index of Multiple Deprivation', 'Quality',
-     'Distance to station', 'Average Income', 'property_type_D',
-     'property_type_F', 'property_type_O', 'property_type_S',
-     'property_type_T']]
-y = data['price']
+x, y = get_data.get_scaled_Xy()
 iterations = 10
 results = np.zeros(shape=(len(splits) * iterations, 4))
 start_time = time.time()
@@ -44,6 +37,6 @@ sns.scatterplot(data=rdf.groupby(by=train_name).mean(), x=train_name, y=error_na
 
 ax.set_xlabel('Training size as a proportion of full data set')
 ax.set_ylabel(f'Mean Absolute Error (avg of {iterations} runs)')
-ax.set_title('Train Test Split Performance for Multi-layer Perceptron')
+ax.set_title('Train Test Split Performance for Ridge Regression')
 plt.show()
-plt.savefig('test_train_split_dropoff.png')
+plt.savefig('images/test_train_split_dropoff_ridge_regression.png')

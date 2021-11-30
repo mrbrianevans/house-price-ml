@@ -6,7 +6,7 @@ def evaluate_model(model, x_test, y_test, qty=5000, graph=False):
     predictions = model.predict(x_test)
 
     error = mean_absolute_error(y_test, predictions)
-    print('Mean absolute error', round(error))
+    # print('Mean absolute error', round(error))
     # plot the first 5,000 predictions to make them easier to compare with the true target values
     if graph:
         fig, ax = plt.subplots(figsize=(12, 12))
